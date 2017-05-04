@@ -8,9 +8,10 @@
     "url": "https://github.com/mujahidk/gistom.git"
   },
   "scripts": {
-    "start": "electron .",
-    "devtools": "electron . --dev-tools",
-    "build": "electron-packager . Gistom"
+    "start": "npm run build && electron .",
+    "devtools": "npm run build && electron . --dev-tools",
+    "build": "gulp",
+    "package": "electron-packager . Gistom"
   },
   "keywords": [
     "GitHub",
@@ -22,6 +23,8 @@
   "devDependencies": {
     "asar": "^0.13.0",
     "electron": "^1.6.6",
-    "electron-packager": "^8.6.0"
+    "electron-packager": "^8.6.0",
+    "gulp": "^3.9.1",
+    "gulp-react": "^3.1.0"
   }
 }
