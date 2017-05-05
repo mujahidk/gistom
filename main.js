@@ -20,7 +20,7 @@ function loadSettings(){
     global.sharedObject.gistUrl = settings.gistUrl
     console.info('Setting gistUrl: ' + global.sharedObject.gistUrl)
   } else {
-    console.warn('Settings file does not exist.')
+    console.warn('Settings file does not exist.', settingsPath)
   }
 }
 function createWindow () {
