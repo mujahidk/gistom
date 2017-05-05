@@ -2,7 +2,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 function GistFile(props){
-  return (<div><span>{props.language}: <a href={props.raw_url}>{props.file}</a></span></div>);
+  const link = `javascript:openUrl('${props.file.raw_url}')`
+  const copyTo = `javascript:showAndCopyUrlText('${props.file.raw_url}')`
+  return (
+    <span>{props.file.language}:
+      <a href={copyTo}>{props.file.filename}</a><a href={link}>(Open)</a>
+    </span>);
 }
 
 class GistItem extends React.Component {
@@ -14,15 +19,14 @@ class GistItem extends React.Component {
     var gist = this.props.gist;
     var files = [];
     for(var key in gist.files){
-      console.log('Loading files for each gist: ' + key);
       var info = gist.files[key];
-      files.push(<GistFile key={info.filename} file={key} language={info.language} raw_url={info.raw_url} />);
+      files.push(<GistFile key={info.filename} file={info} />);
     }
     return (
-    <li>
-      <strong>{gist.description}</strong><br />
-      {files}
-    </li>);
+      <div className="list-group-item">
+        <h4 className="list-group-item-heading">{gist.description}</h4>
+        <p className="list-group-item-text">{files}</p>
+      </div>);
   }
 }
 
@@ -31,20 +35,21 @@ class ListGists extends React.Component {
     super(props);
     this.state = {gists: []};
   }
+
+  getGistUrl(){
+    var source = require('electron').remote.getGlobal('sharedObject').gistUrl;
+    if(!source) {
+      console.warn('Global variable sharedObject.gistUrl is not set. Using default.');
+      source = 'https://api.github.com/gists';
+    }
+    return source;
+  }
+
   loadData(){
-    console.log("Loading data from rest service.");
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', this.props.source);
     var that = this;
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        console.log("Received successful response.")
-        that.setState({gists: JSON.parse(xhr.responseText)});
-      } else {
-        console.log("Request failed to load the data." + xhr.status);
-      }
-    };
-    xhr.send();
+    loadUrlData(this.getGistUrl(), function(data){
+      that.setState({gists: JSON.parse(data)});
+    });
   }
 
   componentDidMount() {
@@ -57,11 +62,23 @@ class ListGists extends React.Component {
     this.state.gists.forEach(function(gist) {
       rows.push(<GistItem gist={gist} key={gist.id} />);
     });
-    return (<ol>{rows}</ol>);
+    return (
+      <div className="row">
+          <div className="col-sm-4">
+            <div className="list-group">{rows}</div>
+          </div>
+          <div className="col-sm-8 fileview" id="fileview">View area</div>
+      </div>);
   }
 }
 
 ReactDOM.render(
-  <ListGists source="https://api.github.com/gists" />,
-  document.getElementById('gists')
+  <ListGists />,
+  document.getElementById('container')
 );
+
+function showAndCopyUrlText(url){
+  copyToClipboard(url, function(data){
+    document.getElementById('fileview').innerText = data
+  });
+}
