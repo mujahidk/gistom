@@ -4,7 +4,6 @@ var less = require('gulp-less');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 
-
 gulp.task('copy-js-vendor', function() {
   return gulp.src([
       'node_modules/react/dist/react.js',
