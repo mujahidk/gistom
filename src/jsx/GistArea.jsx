@@ -35,10 +35,10 @@ class GistArea extends React.Component {
     });
     return (
       <div className="row">
-          <div className="col-sm-4 nopadding">
-            <div className="list-group nomargin">{rows}</div>
+          <div className="col-sm-4 no-padding">
+            <div className="list-group no-margin">{rows}</div>
           </div>
-          <div className="col-sm-8 nopadding" id="fileview"></div>
+          <div className="col-sm-8 no-padding" id="fileview"></div>
       </div>);
   }
 }

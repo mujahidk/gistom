@@ -22,7 +22,7 @@ class GistListItem extends React.Component {
       files.push(<GistFileItem key={info.filename} file={info} />);
     }
     return (
-      <a className="list-group-item" onClick={this.loadGistData}>
+      <a className="list-group-item hand" onClick={this.loadGistData}>
         <h4 className="list-group-item-heading">{gist.description}</h4>
         {files}
       </a>);

@@ -22,7 +22,7 @@ class FileInfoHeader extends React.Component {
     const file = this.state.file
     return (<div className="panel-heading">
       <span className="label label-default">&lt;{file.language}&gt;</span> <strong>{file.filename}</strong>&nbsp;
-      <a onClick={this.copyFileContents}>Copy</a> - <a onClick={this.openFile}>Open</a>
+      <a className="hand" onClick={this.copyFileContents}>Copy</a> - <a className="hand" onClick={this.openFile}>Open</a>
     </div>)
   }
 }
