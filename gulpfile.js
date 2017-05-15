@@ -7,7 +7,8 @@ var concat = require('gulp-concat');
 gulp.task('copy-js-vendor', function() {
   return gulp.src([
       'node_modules/react/dist/react.js',
-      'node_modules/react-dom/dist/react-dom.js'])
+      'node_modules/react-dom/dist/react-dom.js',
+      'src/js/vendor/*.js'])
     .pipe(concat('vendors.js'))
     .pipe(gulp.dest('dist/js'));
 });
@@ -27,7 +28,10 @@ gulp.task('jsx', function(){
 });
 
 gulp.task('less', function () {
-  return gulp.src('src/less/*.less')
+  return gulp.src([
+      'src/less/*.less',
+      'node_modules/highlight.js/styles/xcode.css',
+      'node_modules/highlight.js/styles/monokai-sublime.css'])
     .pipe(less())
     .pipe(gulp.dest('dist/css'))
 });
