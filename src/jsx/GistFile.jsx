@@ -1,26 +1,45 @@
+var Prism = require('prismjs');
+var languages = require('prism-languages')
+Object.keys(languages)['bash','sql','javascript','xml','json', 'groovy', 'docker', 'batch']
 
 class GistFile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filename: props.file.filename,
-      componentDidMount: false,
+      language: props.file.language,
       outerContainerId: `container-${props.file.filename}`
     };
+    this.languageMap = {
+      'shell': 'bash',
+      'plsql': 'sql',
+      'sublime text config': 'json',
+      'dockerfile': 'docker',
+      'batchfile': 'batch'
+    }
+  }
+  highlight(code, lang) {
+    if(this.languageMap[lang]){
+      lang = this.languageMap[lang]
+    }
+    var grammar = lang !== undefined ? Prism.languages[lang] : Prism.languages.markup;
+    var returnVal = code
+    try {
+      returnVal = Prism.highlight(code, grammar, lang);
+    }catch(err){
+      console.error('Error highlighting code for language: ', lang);
+    }
+    return returnVal
   }
   loadFile(url, containerId){
-    var thatState = this.state;
+    // Get the language or default to markup.
+    var language = (this.state.language || 'markup').toLowerCase();
+    var that = this
     loadUrlData(url, function(data){
-      document.getElementById(containerId).innerText = data;
-      if(thatState.componentDidMount){
-        console.log('GistFile component is mounted and loaded.', thatState.outerContainerId);
-        hljs.highlightBlock(document.getElementById(thatState.outerContainerId))
-      }
+      console.log('Language: ', language)
+      // Do the hightlighting using prism here.
+      document.getElementById(containerId).innerHTML = that.highlight(data, language);;
     });
-  }
-  componentDidMount(){
-    this.state.componentDidMount = true;
-    console.log('GistFile component loaded.', this.state.filename);
   }
   render(){
     const file = this.props.file

@@ -27,7 +27,7 @@ function createWindow () {
   // Load settings first.
   loadSettings()
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600, backgroundColor: '#efefef'})
+  win = new BrowserWindow({width: 1280, height: 800, backgroundColor: '#efefef'})
 
   // and load the index.html of the app.
   win.loadURL(url.format({
