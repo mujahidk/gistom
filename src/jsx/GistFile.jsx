@@ -1,6 +1,6 @@
 var Prism = require('prismjs');
 var languages = require('prism-languages')
-Object.keys(languages)['bash','sql','javascript','xml','json', 'groovy', 'docker', 'batch']
+Object.keys(languages)['bash','sql','javascript','xml','json', 'groovy', 'docker', 'batch', 'markdown']
 
 class GistFile extends React.Component {
   constructor(props) {
