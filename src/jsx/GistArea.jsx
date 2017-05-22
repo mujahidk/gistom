@@ -41,12 +41,15 @@ class GistArea extends React.Component {
   render() {
     var rows = [];
     console.log('Rendering data in GistArea.');
+    var count = 0;
     this.state.gists.forEach(function(gist) {
       rows.push(<GistListItem gist={gist} key={gist.id} />);
+      count++;
     });
     return (
       <div className="row">
           <div className="col-sm-4 no-padding gist-column">
+            <div>Gists: {count}</div>
             <div className="list-group no-margin">{rows}</div>
           </div>
           <div className="col-sm-8 col-sm-offset-4 no-padding gist-area" id="fileview"></div>
