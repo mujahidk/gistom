@@ -8,17 +8,18 @@ let win
 
 // Declare global variables.
 global.sharedObject = {
-  gistUrl: 'https://api.github.com/gists'
+  gistUser: null
 }
 
 function loadSettings(){
   const userDataPath = app.getPath('userData')
   const settingsPath = path.join(userDataPath, 'settings.json')
   if(fs.existsSync(settingsPath)){
+    console.info('Settings file path: ', settingsPath);
     const buf = fs.readFileSync(settingsPath, 'utf8')
     const settings = JSON.parse(buf.toString())
-    global.sharedObject.gistUrl = settings.gistUrl
-    console.info('Setting gistUrl: ' + global.sharedObject.gistUrl)
+    global.sharedObject.gistUser = settings.gistUser
+    console.info('Setting gistUser: ' + global.sharedObject.gistUser)
   } else {
     console.warn('Settings file does not exist.', settingsPath)
   }

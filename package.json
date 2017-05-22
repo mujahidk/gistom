@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "octonode": "^0.7.12",
     "prism-languages": "^0.3.3",
     "prismjs": "^1.6.0",
     "react": "^15.5.4",

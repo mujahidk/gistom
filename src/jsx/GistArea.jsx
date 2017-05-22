@@ -1,26 +1,37 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+const github = require('octonode');
+
 class GistArea extends React.Component {
   constructor(props) {
     super(props);
     this.state = {gists: []};
   }
 
-  getGistUrl(){
-    var source = require('electron').remote.getGlobal('sharedObject').gistUrl;
-    if(!source) {
-      console.warn('Global variable sharedObject.gistUrl is not set. Using default.');
-      source = 'https://api.github.com/gists';
-    }
-    return source;
+  getGistUser(){
+    const settings = require('electron').remote.getGlobal('sharedObject');
+    var gistUser = settings.gistUser;
+    return gistUser;
+  }
+
+  handleCallback(err, status, body, headers){
+    this.setState({gists: status});
   }
 
   loadData(){
-    var that = this;
-    loadUrlData(this.getGistUrl(), function(data){
-      that.setState({gists: JSON.parse(data)});
-    });
+    console.log('Loading data for GistArea.');
+    const client = github.client();
+    const ghgist = client.gist();
+    const pagination = {page: 1, per_page: 100};
+    const user = this.getGistUser();
+    if(!user) {
+      console.warn('Global variable sharedObject.gistUser is not set. Using public gist.');
+      ghgist.list(pagination, this.handleCallback.bind(this));
+    } else {
+      ghgist.user(pagination, user, this.handleCallback.bind(this));
+      console.log('Loading user specific data.');
+    }
   }
 
   componentDidMount() {
@@ -29,7 +40,7 @@ class GistArea extends React.Component {
   }
   render() {
     var rows = [];
-    console.log('Rendering data.');
+    console.log('Rendering data in GistArea.');
     this.state.gists.forEach(function(gist) {
       rows.push(<GistListItem gist={gist} key={gist.id} />);
     });
@@ -43,7 +54,4 @@ class GistArea extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <GistArea />,
-  document.getElementById('container')
-);
+ReactDOM.render(<GistArea />, document.getElementById('container'));

@@ -13,6 +13,7 @@ class GistFile extends React.Component {
     this.languageMap = {
       'shell': 'bash',
       'plsql': 'sql',
+      'sqlpl': 'sql',
       'sublime text config': 'json',
       'dockerfile': 'docker',
       'batchfile': 'batch'
@@ -48,7 +49,7 @@ class GistFile extends React.Component {
     <div className="panel panel-default">
       <FileInfoHeader file={file} filename={file.filename} />
       <div className="panel-body">
-        <pre id={this.state.outerContainerId} className="fileview"><code id={file.filename}></code></pre>
+        <pre id={this.state.outerContainerId} className="file-contents"><code id={file.filename}></code></pre>
       </div>
     </div>)
   }
