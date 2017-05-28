@@ -30,10 +30,15 @@ gulp.task('jsx', function(){
 gulp.task('less', function () {
   return gulp.src([
       'src/less/*.less',
-      'node_modules/highlight.js/styles/xcode.css',
-      'node_modules/highlight.js/styles/monokai-sublime.css'])
+      'node_modules/prismjs/themes/prism.css',
+      'node_modules/bootstrap/dist/css/bootstrap.css'])
     .pipe(less())
     .pipe(gulp.dest('dist/css'))
+});
+
+gulp.task('fonts', function(){
+  return gulp.src('node_modules/bootstrap/dist/fonts/*.*')
+    .pipe(gulp.dest('dist/fonts'))
 });
 
 gulp.task('html', function(){
@@ -41,4 +46,4 @@ gulp.task('html', function(){
     .pipe(gulp.dest('dist/'))
 });
 
-gulp.task('default', ['vendor','jsx','less','html']);
+gulp.task('default', ['vendor','jsx','less','fonts','html']);

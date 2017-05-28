@@ -4,5 +4,11 @@
 
 GitHub gist atomic editor.
 
+## Configuration
+
+| Setting  | Description     |
+|----------|-----------------|
+| gistuser | GitHub username |
+
 ## Licensing
 The MIT License (MIT). See [LICENSE](LICENSE) fro full license text.

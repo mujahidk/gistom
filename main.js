@@ -1,7 +1,8 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
-const fs = require('fs')
+const Config = require('electron-config');
+const config = new Config();
 
 // Main window reference.
 let win
@@ -12,17 +13,10 @@ global.sharedObject = {
 }
 
 function loadSettings(){
-  const userDataPath = app.getPath('userData')
-  const settingsPath = path.join(userDataPath, 'settings.json')
-  if(fs.existsSync(settingsPath)){
-    console.info('Settings file path: ', settingsPath);
-    const buf = fs.readFileSync(settingsPath, 'utf8')
-    const settings = JSON.parse(buf.toString())
-    global.sharedObject.gistUser = settings.gistUser
-    console.info('Setting gistUser: ' + global.sharedObject.gistUser)
-  } else {
-    console.warn('Settings file does not exist.', settingsPath)
-  }
+  const userDataPath = app.getPath('userData');
+  console.info('Settings file path: ', userDataPath);
+  global.sharedObject.gistUser = config.get('gistuser');
+  console.info('Setting gistUser: ', global.sharedObject.gistUser)
 }
 function createWindow () {
   // Load settings first.

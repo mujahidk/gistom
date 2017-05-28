@@ -32,6 +32,8 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "electron-config": "^1.0.0",
+    "full-text-search": "0.0.16",
     "octonode": "^0.7.12",
     "prism-languages": "^0.3.3",
     "prismjs": "^1.6.0",
