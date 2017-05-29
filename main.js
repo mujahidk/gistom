@@ -21,8 +21,9 @@ function loadSettings(){
 function createWindow () {
   // Load settings first.
   loadSettings()
+  let { width, height } = config.get('windowBounds') || { width: 800, height: 600 };
   // Create the browser window.
-  win = new BrowserWindow({width: 1280, height: 800, backgroundColor: '#efefef'})
+  win = new BrowserWindow({ width, height });
 
   // and load the index.html of the app.
   win.loadURL(url.format({
@@ -39,7 +40,12 @@ function createWindow () {
   // Emitted when the window is closed.
   win.on('closed', () => {
     win = null
-  })
+  });
+  // On window resize save the window dimensions.
+  win.on('resize', () => {
+    let { width, height } = win.getBounds();
+    config.set('windowBounds', { width, height });
+  });
 }
 
 // When electron is ready, create window.

@@ -57,7 +57,7 @@ class GistArea extends React.Component {
       count: results.length,
       term: `(Filter: ${this.input.value})`
     });
-    this.input.value = '';
+    this.input.value = ''; // Reset search box to blank.
     console.log('Search results: ', this.input.value, results);
   }
   render() {
@@ -70,7 +70,7 @@ class GistArea extends React.Component {
       <div className="row">
           <div className="col-sm-4 no-padding gist-column">
             <div className="well well-sm no-margin">
-              <form  className="form-inline" onSubmit={this.searchText}>
+              <form className="form-inline" onSubmit={this.searchText}>
                 <input type="text" className="form-control" placeholder="Search" ref={(input) => this.input = input}  />
                 <button type="submit" className="btn btn-default" >Search</button>
               </form>
